@@ -8,7 +8,6 @@ const FilmListItem = (props) => {
     return (
         <Link to={'/details/' + film.id} className='list-group-item'>
           <div className='d-flex'>
-              {film.titleText.text}
               {film.primaryImage ?
                   <img src={film.primaryImage.url} style={{height: '150px'}}/>
                   :
@@ -16,8 +15,14 @@ const FilmListItem = (props) => {
                       No image available.
                   </div>
               }
-
-
+              <div>
+                  <div className='fw-bold'>
+                      {film.titleText.text}
+                  </div>
+                  <div className='fw-light'>
+                      {film.releaseYear.year}
+                  </div>
+              </div>
           </div>
       </Link>
     );
