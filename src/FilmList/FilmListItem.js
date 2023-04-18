@@ -9,7 +9,7 @@ const FilmListItem = (props) => {
         <Link to={'/details/' + film.id} className='list-group-item'>
           <div className='d-flex'>
               {film.primaryImage ?
-                  <img src={film.primaryImage.url} style={{height: '150px'}}/>
+                  <img src={film.primaryImage.url} className='rounded p-2' style={{height: '150px'}}/>
                   :
                   <div>
                       No image available.

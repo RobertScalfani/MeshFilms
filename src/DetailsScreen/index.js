@@ -9,6 +9,7 @@ export const DetailsScreen = () => {
     const dispatch = useDispatch();
 
     const params = useParams();
+    console.log(params.filmId);
     console.log(JSON.stringify(film));
     useEffect(() => {
         dispatch(getFilmThunk(params.filmId));
@@ -19,13 +20,30 @@ export const DetailsScreen = () => {
      */
     return (
         <div>
+            <h1>
+                Details
+            </h1>
             { loading ?
                 <div>
                     Loading...
                 </div>
                 :
                 <div>
-                    {film.id}
+                    {film.primaryImage ?
+                        <img src={film.primaryImage.url} className='rounded m-2' style={{height: '500px'}}/>
+                        :
+                        <div>
+                            No image available.
+                        </div>
+                    }
+                    <div>
+                        <h2>
+                            {film.titleText.text}
+                        </h2>
+                        <h4 className='fw-light'>
+                            {film.releaseYear.year}
+                        </h4>
+                    </div>
                 </div>
             }
         </div>

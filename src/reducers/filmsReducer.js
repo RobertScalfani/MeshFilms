@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {searchFilmsThunk, getFilmThunk} from "../services/filmsThunk";
+import {searchFilmsThunk, getFilmThunk, getUpcomingFilmsThunk} from "../services/filmsThunk";
 
 const filmsSlice = createSlice({
     name: 'films',
-    initialState: {films: [], film: {}, loading: false},
+    initialState: {films: [], film: {}, loading: true},
     reducers: {},
     extraReducers: {
         [searchFilmsThunk.pending]:
@@ -35,7 +35,22 @@ const filmsSlice = createSlice({
             (state, action) => {
                 state.loading = false
                 state.error = action.error
-            }
+            },
+        [getUpcomingFilmsThunk.pending]:
+            (state) => {
+                state.loading = true
+                state.films = []
+            },
+        [getUpcomingFilmsThunk.fulfilled]:
+            (state, {payload}) => {
+                state.loading = false
+                state.films = payload
+            },
+        [getUpcomingFilmsThunk.rejected]:
+            (state, action) => {
+                state.loading = false
+                state.error = action.error
+            },
     }
 });
 

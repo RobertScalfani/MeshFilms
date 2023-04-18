@@ -8,3 +8,7 @@ export const getFilmThunk = createAsyncThunk('films/getFilm', async (id) => {
 export const searchFilmsThunk = createAsyncThunk('films/searchFilms', async (searchQuery) => {
    return await service.searchFilms(searchQuery);
 });
+
+export const getUpcomingFilmsThunk = createAsyncThunk('films/upcomingFilms', async () => {
+   return await service.getUpcomingFilms();
+});

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {searchFilmsThunk} from "../services/filmsThunk";
-import FilmList from "./FilmList";
+import FilmList from "../FilmList";
 
 export const SearchResultsScreen = () => {
 
