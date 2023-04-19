@@ -12,6 +12,12 @@
     "link": "search"
   },
   {
+    "_id": 4,
+    "icon": "bi bi-door-open",
+    "title": "Login",
+    "link": "login"
+  },
+  {
     "_id": 3,
     "icon": "bi bi-person",
     "title": "My Profile",

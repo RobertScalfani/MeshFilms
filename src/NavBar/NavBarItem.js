@@ -13,7 +13,7 @@ const NavBarItem = (
         <Link to={link} className={`list-group-item`}>
             <div className="d-flex">
                 <i className={`${icon} align-self-center`}></i>
-                <span className="d-none d-xl-block d-xxl-block">&nbsp;{title}</span>
+                <span>&nbsp;{title}</span>
             </div>
         </Link>
     );

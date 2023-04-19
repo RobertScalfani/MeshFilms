@@ -2,21 +2,24 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {loginThunk} from "../services/usersThunk";
+import PageHeader from "../Components/PageHeader";
 
 function LoginScreen() {
 
     const { currentUser, loading, error } = useSelector((state) => state.user);
 
-    const [userName, setUserName] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const invalidLogin = error && error.message === "Request failed with status code 404";
+    const invalidRegistration = error && error.message === "Request failed with status code 409";
+
     const handleLogin = async () => {
-        try {
-            await dispatch(loginThunk({ userName, password }));
-            navigate("/profile");
-        } catch (e) {
-            alert(e);
+        await dispatch(loginThunk({ username, password }));
+        if(!invalidLogin && !invalidRegistration) {
+            navigate('/profile');
         }
     };
 
@@ -24,18 +27,15 @@ function LoginScreen() {
 
     }
 
-    const invalidLogin = error && error.message == "Request failed with status code 404";
-    const invalidRegistration = error && error.message == "Request failed with status code 409";
-
     return (
         <div>
-            <h1>Login Screen</h1>
+            <PageHeader title={'Login'}/>
             <div className='d-flex justify-content-center align-items-center flex-column'>
                 <div>
                     <label>Username</label>
                     <input className="form-control"
-                           type="text" value={userName}
-                           onChange={(event) => setUserName(event.target.value)}
+                           type="text" value={username}
+                           onChange={(event) => setUsername(event.target.value)}
                     />
                 </div>
                 <div>
@@ -53,6 +53,13 @@ function LoginScreen() {
                         Register
                     </button>
                 </div>
+                {currentUser ?
+                    <div>
+                        You are already logged in.
+                    </div>
+                :
+                    <></>
+                }
                 {invalidLogin ?
                     <div className='text-danger'>
                         That username/password combination does not exist. Try again or register a new account.

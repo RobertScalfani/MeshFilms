@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getUpcomingFilmsThunk} from "../services/filmsThunk";
 import FilmList from "../FilmList";
+import PageHeader from "../Components/PageHeader";
 
 export const HomeScreen = () => {
 
@@ -18,9 +19,7 @@ export const HomeScreen = () => {
      */
     return (
         <div>
-            <h2>
-                Home
-            </h2>
+            <PageHeader title={'Home'}/>
             <h4>
                 Recent Reviews
             </h4>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import {logoutThunk, profileThunk, updateUserThunk} from "../services/usersThunk";
+import PageHeader from "../Components/PageHeader";
 
 function ProfileScreen() {
     const {currentUser} = useSelector((state) => state.user);
@@ -27,44 +28,47 @@ function ProfileScreen() {
      */
     return (
         <div>
-            <h1>Profile Screen</h1>
+            <PageHeader title={'My Profile'}/>
             {updatedProfile && (
                 <div>
-                    <div>
-                        <label>First Name</label>
+                    <form className='d-flex align-items-center'>
+                        <label className='pe-3'>First Name</label>
                         <input type="text"
-                               value={updatedProfile.firstName}
-                               onChange={(event) => {
-                                   const newProfile = {
-                                       ...updatedProfile,
-                                       firstName: event.target.value,
-                                   };
-                                   setUpdatedProfile(newProfile);
-                               }}
+                           className="form-control w-50"
+                           value={updatedProfile.firstName}
+                           onChange={(event) => {
+                               const newProfile = {
+                                   ...updatedProfile,
+                                   firstName: event.target.value,
+                               };
+                               setUpdatedProfile(newProfile);
+                           }}
                         />
-                    </div>
-                    <div>
-                        <label>Last Name</label>
+                    </form>
+                    <form className='d-flex align-items-center'>
+                        <label className='pe-3'>Last Name</label>
                         <input type="text"
-                               value={updatedProfile.lastName}
-                               onChange={(event) => {
-                                   const newProfile = {
-                                       ...updatedProfile,
-                                       lastName: event.target.value,
-                                   };
-                                   setUpdatedProfile(newProfile);
-                               }}
+                           className="form-control w-50"
+                           value={updatedProfile.lastName}
+                           onChange={(event) => {
+                               const newProfile = {
+                                   ...updatedProfile,
+                                   lastName: event.target.value,
+                               };
+                               setUpdatedProfile(newProfile);
+                           }}
                         />
-                    </div>
+                    </form>
                 </div>
             )}
             <button
+                className="btn btn-primary mx-2"
                 onClick={() => {
                     dispatch(logoutThunk());
                     navigate("/login");
                 }}>
                 Logout</button>
-            <button onClick={save}>Save</button>
+            <button className="btn btn-primary mx-2" onClick={save}>Save</button>
         </div>
     );
 
