@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {loginThunk} from "../services/usersThunk";
+import {loginThunk, registerThunk} from "../services/usersThunk";
 import PageHeader from "../Components/PageHeader";
 
 function LoginScreen() {
@@ -17,19 +17,22 @@ function LoginScreen() {
     const invalidRegistration = error && error.message === "Request failed with status code 409";
 
     const handleLogin = async () => {
-        await dispatch(loginThunk({ username, password }));
-        if(!invalidLogin && !invalidRegistration) {
-            navigate('/profile');
+        if (!currentUser) {
+            await dispatch(loginThunk({ username, password }));
         }
     };
 
     const handleRegister = async () => {
+        await dispatch(registerThunk({ username, password }));
+    }
 
+    if (currentUser && !invalidLogin && !invalidRegistration && !loading) {
+        navigate('/profile');
     }
 
     return (
         <div>
-            <PageHeader title={'Login'}/>
+            <PageHeader title={'Login or Register'}/>
             <div className='d-flex justify-content-center align-items-center flex-column'>
                 <div>
                     <label>Username</label>
@@ -53,19 +56,15 @@ function LoginScreen() {
                         Register
                     </button>
                 </div>
-                {currentUser ?
+                {currentUser &&
                     <div>
                         You are already logged in.
                     </div>
-                :
-                    <></>
                 }
-                {invalidLogin ?
+                {invalidLogin &&
                     <div className='text-danger'>
                         That username/password combination does not exist. Try again or register a new account.
                     </div>
-                    :
-                    <></>
                 }
                 {invalidRegistration ?
                     <div className='text-danger'>

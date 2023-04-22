@@ -7,20 +7,26 @@
   },
   {
     "_id": 2,
-    "icon": "bi bi-search",
-    "title": "Search for Films",
+    "icon": "bi bi-film",
+    "title": "Film Search",
     "link": "search"
   },
   {
     "_id": 4,
-    "icon": "bi bi-door-open",
-    "title": "Login",
-    "link": "login"
+    "icon": "bi bi-people",
+    "title": "People Search",
+    "link": "membersearch"
   },
   {
     "_id": 3,
     "icon": "bi bi-person",
     "title": "My Profile",
     "link": "profile"
+  },
+  {
+    "_id": 5,
+    "icon": "bi bi-gear",
+    "title": "Manage Users",
+    "link": "manage"
   }
 ]

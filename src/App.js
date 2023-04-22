@@ -1,30 +1,49 @@
 import './App.css';
-import {Provider} from "react-redux";
-import filmsReducer from "./reducers/filmsReducer";
-import { configureStore } from '@reduxjs/toolkit';
-import {Route, Routes} from "react-router";
+import {useDispatch, useSelector} from "react-redux";
+import {Route, Routes, useNavigate} from "react-router";
 import {SearchScreen} from "./SearchScreen";
 import {DetailsScreen} from "./DetailsScreen";
 import NavBar from "./NavBar";
 import {HomeScreen} from "./HomeScreen";
 import LoginScreen from "./LoginScreen";
 import ProfileScreen from "./ProfileScreen";
-import usersReducer from "./reducers/usersReducer";
-
-const store = configureStore({
-  reducer: {films: filmsReducer, user: usersReducer}
-});
+import {Link} from "react-router-dom";
+import {logoutThunk} from "./services/usersThunk";
 
 function App() {
-  return (
-      <Provider store={store}>
+
+    const { currentUser, loading } = useSelector((state) => state.user);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    return (
           <div className='container'>
               <div className=' d-flex justify-content-between py-3 px-5 border rounded-bottom border-2 mb-3 bg-primary bg-opacity-10'>
                   <h5 className='m-0 p-0'>
                       MeshFilms.com - Rate, share, and find films with friends!
                   </h5>
-                  <h5 className='m-0 p-0 border rounded'>
-                    Logged in as...
+                  <h5 className='m-0 p-0'>
+                    {currentUser ?
+                        <div>
+                            Logged in as {currentUser.username}.
+                            <button className='btn btn-primary ms-3' onClick={() => {
+                                dispatch(logoutThunk());
+                                navigate("/login");
+                            }}>
+                                Log out
+                            </button>
+                        </div>
+                        :
+                        <div>
+                            You are not logged in.
+                            <button className='btn btn-primary ms-3' onClick={() => {
+                                navigate("/login");
+                            }}>
+                                Log In
+                            </button>
+                        </div>
+                    }
                   </h5>
               </div>
               <div className='row'>
@@ -42,7 +61,6 @@ function App() {
                   </div>
               </div>
           </div>
-      </Provider>
   );
 }
 

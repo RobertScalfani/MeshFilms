@@ -3,6 +3,7 @@ import axios from "axios";
 const SERVER_API_URL = 'http://localhost:4000/api'
 const USERS_URL = `${SERVER_API_URL}/users`;
 
+axios.defaults.withCredentials = true;
 const api = axios.create({ withCredentials: true });
 
 export const login = async ({ username, password }) => {
@@ -20,22 +21,24 @@ export const logout = async () => {
 };
 
 export const profile = async () => {
-    const response = await api.post(`${USERS_URL}/profile`);
+    const response = await api.get(`${USERS_URL}/profile`);
     return response.data;
 };
 
 export const updateUser = async (user) => {
-    const response = await api.put(`${USERS_URL}/${user._id}`, user);
-    return response.data;
+    console.log("JKJKJKJKJK");
+    user = user.updatedProfile;
+    console.log(user);
+    const response = await api.put(`${USERS_URL}/${user['_id']}`, user);
+    console.log(response.data);
+    return user;
 };
 
-export const register = async ({ userName, password }) => {
+export const register = async ({ username, password }) => {
     const body = {
-        userName: userName,
-        password: password,
-        firstName: "hi",
-        lastName: "hi again"
+        username: username,
+        password: password
     };
-    const response = await api.post(`${USERS_URL}/register)`, body);
+    const response = await api.post(`${USERS_URL}/register`, body);
     return response.data;
 };

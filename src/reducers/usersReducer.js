@@ -3,7 +3,7 @@ import {loginThunk, logoutThunk, profileThunk, registerThunk, updateUserThunk} f
 
 
 const usersSlice = createSlice({
-    name: "users",
+    name: "user",
     initialState: { currentUser: null, loading: true, error: null},
     reducers: {},
     extraReducers: {
@@ -28,10 +28,17 @@ const usersSlice = createSlice({
         [profileThunk.pending]: (state, { payload }) => {
             state.loading = true;
             state.currentUser = null;
+            state.error = null;
         },
         [profileThunk.fulfilled]: (state, { payload }) => {
             state.loading = false;
             state.currentUser = payload;
+            state.error = null;
+        },
+        [profileThunk.rejected]: (state, action) => {
+            state.loading = false;
+            state.currentUser = null;
+            state.error = action.error;
         },
         [updateUserThunk.fulfilled]: (state, { payload }) => {
             state.currentUser = payload;
