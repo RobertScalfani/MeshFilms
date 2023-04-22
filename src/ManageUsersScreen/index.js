@@ -1,42 +1,37 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getUpcomingFilmsThunk} from "../services/filmsThunk";
-import FilmList from "../FilmList";
 import PageHeader from "../Components/PageHeader";
+import UsersList from "../UsersList";
+import {getAllUsersThunk} from "../services/usersThunks";
 
 export const ManageUsersScreen = () => {
 
     const {users, loading} = useSelector(state => state.users)
     const dispatch = useDispatch();
+
     useEffect(() => {
-        dispatch(getUpcomingFilmsThunk());
+        dispatch(getAllUsersThunk());
     }, []);
 
-    console.log(films);
+    console.log(users);
 
     /**
      * Render.
      */
     return (
         <div>
-            <PageHeader title={'Home'}/>
-            <h4>
-                Recent Reviews
-            </h4>
-            <div>
-                ...
-            </div>
+            <PageHeader title={'Manage Users'}/>
             <div>
                 <h4>
-                    Upcoming Films
+                    All users:
                 </h4>
                 {loading ?
                     <div>
                         Loading...
                     </div>
                     :
-                    <FilmList
-                        films={films}
+                    <UsersList
+                        users={users}
                     />
                 }
             </div>

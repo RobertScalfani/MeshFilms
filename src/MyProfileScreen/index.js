@@ -1,32 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import {logoutThunk, profileThunk, updateUserThunk} from "../services/usersThunk";
+import {logoutThunk, updateUserThunk} from "../services/authThunks";
 import PageHeader from "../Components/PageHeader";
 
-function ProfileScreen() {
-    const {currentUser} = useSelector((state) => state.user)
+function MyProfileScreen() {
+    const {currentUser} = useSelector((state) => state.auth)
     const [updatedProfile, setUpdatedProfile] = useState(currentUser);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    console.log(updatedProfile);
-    // console.log(currentUser);
-
     const save = async () => {
-        console.log("POPOP");
-        console.log(updatedProfile);
-        const {payload} = await dispatch(updateUserThunk({updatedProfile}));
-        console.log("LLLL");
-        console.log(payload);
+        await dispatch(updateUserThunk({updatedProfile}));
     };
-
-    useEffect(() => {
-        // dispatch(profileThunk()).then(({payload}) => {
-        //     setUpdatedProfile(payload);
-        // });
-        // setUpdatedProfile(useSelector((state) => state.user));
-    }, []);
 
     /**
      * Render.
@@ -114,4 +100,4 @@ function ProfileScreen() {
 
 }
 
-export default ProfileScreen;
+export default MyProfileScreen;

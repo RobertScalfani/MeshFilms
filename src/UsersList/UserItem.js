@@ -5,7 +5,7 @@ const UserItem = (props) => {
     const user = props.user;
 
     return (
-        <Link to={'/details/' + film.id} className='list-group-item'>
+        <Link to={'/profile/' + user._id} className='list-group-item'>
             <div className='d-flex'>
                 <div className='ms-4'>
                     <h4 className='fw-bold'>

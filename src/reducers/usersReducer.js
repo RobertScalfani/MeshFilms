@@ -1,51 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {loginThunk, logoutThunk, profileThunk, registerThunk, updateUserThunk} from "../services/usersThunk";
-
+import {getAllUsersThunk, getUserThunk} from "../services/usersThunks";
 
 const usersSlice = createSlice({
-    name: "user",
-    initialState: { currentUser: null, loading: true, error: null},
+    name: 'users',
+    initialState: {users: [], viewUser: null, loading: true},
     reducers: {},
     extraReducers: {
-        [loginThunk.pending]: (state, { payload }) => {
-            state.loading = true;
-            state.currentUser = null;
-            state.error = null;
-        },
-        [loginThunk.fulfilled]: (state, { payload }) => {
-            state.loading = false;
-            state.currentUser = payload;
-            state.error = null;
-        },
-        [loginThunk.rejected]: (state, action) => {
-            state.loading = false;
-            state.currentUser = null;
-            state.error = action.error
-        },
-        [logoutThunk.fulfilled]: (state) => {
-            state.currentUser = null;
-        },
-        [profileThunk.pending]: (state, { payload }) => {
-            state.loading = true;
-            state.currentUser = null;
-            state.error = null;
-        },
-        [profileThunk.fulfilled]: (state, { payload }) => {
-            state.loading = false;
-            state.currentUser = payload;
-            state.error = null;
-        },
-        [profileThunk.rejected]: (state, action) => {
-            state.loading = false;
-            state.currentUser = null;
-            state.error = action.error;
-        },
-        [updateUserThunk.fulfilled]: (state, { payload }) => {
-            state.currentUser = payload;
-        },
-        [registerThunk.fulfilled]: (state, { payload }) => {
-            state.currentUser = payload
-        },
-    },
+        [getAllUsersThunk.pending]:
+            (state) => {
+                state.loading = true
+                state.users = []
+            },
+        [getAllUsersThunk.fulfilled]:
+            (state, {payload}) => {
+                state.loading = false
+                state.users = payload
+            },
+        [getAllUsersThunk.rejected]:
+            (state, action) => {
+                state.loading = false
+                state.users = []
+            },
+        [getUserThunk.pending]:
+            (state) => {
+                state.loading = true
+                state.viewUser = null
+            },
+        [getUserThunk.fulfilled]:
+            (state, {payload}) => {
+                state.loading = false
+                state.viewUser = payload
+            },
+    }
 });
+
 export default usersSlice.reducer;

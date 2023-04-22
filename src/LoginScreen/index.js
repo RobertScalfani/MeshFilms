@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {loginThunk, registerThunk} from "../services/usersThunk";
+import {loginThunk, registerThunk} from "../services/authThunks";
 import PageHeader from "../Components/PageHeader";
 
 function LoginScreen() {
 
-    const { currentUser, loading, error } = useSelector((state) => state.user);
+    const { currentUser, loading, error } = useSelector((state) => state.auth);
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");

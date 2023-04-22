@@ -6,13 +6,14 @@ import {DetailsScreen} from "./DetailsScreen";
 import NavBar from "./NavBar";
 import {HomeScreen} from "./HomeScreen";
 import LoginScreen from "./LoginScreen";
-import ProfileScreen from "./ProfileScreen";
-import {Link} from "react-router-dom";
-import {logoutThunk} from "./services/usersThunk";
+import MyProfileScreen from "./MyProfileScreen";
+import {logoutThunk} from "./services/authThunks";
+import {ManageUsersScreen} from "./ManageUsersScreen";
+import ViewProfileScreen from "./ViewProfileScreen";
 
 function App() {
 
-    const { currentUser, loading } = useSelector((state) => state.user);
+    const { currentUser, loading } = useSelector((state) => state.auth);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -54,9 +55,11 @@ function App() {
                       <Routes>
                           <Route index path="home" element={<HomeScreen/>}/>
                           <Route path='login' element={<LoginScreen/>}/>
-                          <Route path='profile' element={<ProfileScreen/>}/>
+                          <Route path='profile' element={<MyProfileScreen/>}/>
+                          <Route path='profile/:profileId' element={<ViewProfileScreen/>}/>
                           <Route path='search' element={<SearchScreen/>}/>
                           <Route path='details/:filmId' element={<DetailsScreen/>}/>
+                          <Route path='manage' element={<ManageUsersScreen/>}/>
                       </Routes>
                   </div>
               </div>
