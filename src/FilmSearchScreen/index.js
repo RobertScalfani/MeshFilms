@@ -4,18 +4,25 @@ import PageHeader from "../Components/PageHeader";
 import {clearFilms} from "../reducers/filmsReducer";
 import {Route, Routes, useNavigate, useParams} from "react-router";
 import {FilmSearchResults} from "./FilmSearchResults";
+import {profileThunk} from "../services/authThunks";
 
 export const FilmSearchScreen = () => {
 
     const params = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     // Local state.
     const [searchQuery, setSearchQuery] = React.useState(params.searchQuery);
+    const [submitSearch, setSubmitSearch] = React.useState(false);
 
-    const submitSearch = () => {
-        navigate(`/search/${searchQuery}`);
-    }
+    React.useEffect(() => {
+        if (submitSearch) {
+            navigate(`/search/${searchQuery}`);
+        } else {
+            dispatch(profileThunk());
+        }
+    }, [submitSearch])
 
     /**
      * Render.
@@ -27,7 +34,7 @@ export const FilmSearchScreen = () => {
                 <div className="form-group w-100 me-3">
                     <input type="text" className="form-control" id="film-search" placeholder='Film Search' onChange={(event) => setSearchQuery(event.target.value)}/>
                 </div>
-                <button className='btn btn-primary' onClick={submitSearch}>
+                <button className='btn btn-primary' onClick={() => setSubmitSearch(true)}>
                     <i className="bi bi-search"></i>
                 </button>
             </form>

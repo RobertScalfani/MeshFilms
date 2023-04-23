@@ -8,7 +8,7 @@ import NavBar from "./NavBar";
 import {HomeScreen} from "./HomeScreen";
 import LoginScreen from "./LoginScreen";
 import MyProfileScreen from "./MyProfileScreen";
-import {logoutThunk} from "./services/authThunks";
+import {logoutThunk, profileThunk} from "./services/authThunks";
 import {ManageUsersScreen} from "./ManageUsersScreen";
 import ViewProfileScreen from "./ViewProfileScreen";
 import {PeopleSearchScreen} from "./PeopleSearchScreen";
@@ -29,6 +29,7 @@ function App() {
             }
             logout();
         }
+        dispatch(profileThunk());
     }, [timeToLogout]);
 
     const dispatch = useDispatch();

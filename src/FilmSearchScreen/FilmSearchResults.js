@@ -17,7 +17,8 @@ export const FilmSearchResults = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         if (searchQuery) {
-            dispatch(searchFilmsThunk(searchQuery));
+            const search = async () => dispatch(searchFilmsThunk(searchQuery));
+            search();
         } else {
             dispatch(clearFilms());
         }

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import {logoutThunk, updateUserThunk} from "../services/authThunks";
+import {logoutThunk, profileThunk, updateUserThunk} from "../services/authThunks";
 import PageHeader from "../Components/PageHeader";
 import RatingsList from "../RatingsList";
 import {getRatingsByReviewerIdThunk} from "../services/ratingsThunks";
@@ -29,6 +29,7 @@ function MyProfileScreen() {
         else if (currentUser) {
             (async () => await dispatch(getRatingsByReviewerIdThunk(currentUser._id)))();
         }
+        dispatch(profileThunk());
     }, [attemptLogout]);
 
     const save = async () => {
