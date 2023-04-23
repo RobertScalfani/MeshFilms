@@ -15,3 +15,8 @@ export const getUser = async (id) => {
     const response = await api.get(`${USERS_URL}/getUser/${id}`);
     return response.data;
 };
+
+export const deleteUser = async (id) => {
+    const response = await api.delete(`${USERS_URL}/deleteUser/${id}`);
+    return response.data;
+};

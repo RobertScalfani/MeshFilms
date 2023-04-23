@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {getAllUsersThunk, getUserThunk} from "../services/usersThunks";
+import {getAllUsersThunk, getUserThunk, deleteUserThunk} from "../services/usersThunks";
 
 const usersSlice = createSlice({
     name: 'users',
@@ -30,6 +30,14 @@ const usersSlice = createSlice({
             (state, {payload}) => {
                 state.loading = false
                 state.viewUser = payload
+            },
+        [deleteUserThunk.pending]:
+            (state) => {
+                state.loading = true
+            },
+        [deleteUserThunk.fulfilled]:
+            (state) => {
+                state.loading = false
             },
     }
 });

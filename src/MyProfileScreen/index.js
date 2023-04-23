@@ -95,6 +95,10 @@ function MyProfileScreen() {
                     </button>
                 </div>
             }
+            <PageHeader title={'My Ratings'}/>
+            <div>
+                ...
+            </div>
         </div>
     );
 

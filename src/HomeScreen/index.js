@@ -12,8 +12,6 @@ export const HomeScreen = () => {
         dispatch(getUpcomingFilmsThunk());
     }, []);
 
-    console.log(films);
-
     /**
      * Render.
      */

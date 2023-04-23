@@ -11,6 +11,8 @@ const UserList = (props) => {
                 return (
                     <UserItem
                         user={user}
+                        isAdmin={props.isAdmin}
+                        deleteCallback={props.deleteCallback}
                     />
                 );
             })}

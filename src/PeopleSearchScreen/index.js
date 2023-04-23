@@ -1,32 +1,33 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {searchFilmsThunk} from "../services/filmsThunk";
-import FilmList from "../FilmList";
 import PageHeader from "../Components/PageHeader";
+import UsersList from "../UsersList";
+import {getAllUsersThunk} from "../services/usersThunks";
+import {searchFilmsThunk} from "../services/filmsThunk";
 
-export const SearchScreen = () => {
+export const PeopleSearchScreen = () => {
 
     const [searchQuery, setSearchQuery] = React.useState('');
     const [search, setSearch] = React.useState(false);
 
-    const {films, loading} = useSelector(state => state.films)
+    const {users, loading} = useSelector(state => state.users)
     const dispatch = useDispatch();
+
     useEffect(() => {
-        if (search) {
-            dispatch(searchFilmsThunk(searchQuery));
-        }
-        setSearch(false);
-    }, [search]);
+        dispatch(getAllUsersThunk());
+    }, []);
+
+    console.log(users);
 
     /**
      * Render.
      */
     return (
         <div>
-            <PageHeader title={'Film Search'}/>
+            <PageHeader title={'User Search'}/>
             <form className='d-flex justify-content-end mb-2'>
                 <div className="form-group w-100 me-3">
-                    <input type="text" className="form-control" id="film-search" placeholder='Film Search' onChange={(event) => setSearchQuery(event.target.value)}/>
+                    <input type="text" className="form-control" id="user-search" placeholder='Search for Users' onChange={(event) => setSearchQuery(event.target.value)}/>
                 </div>
                 <button className='btn btn-primary' onClick={() => setSearch(true)}>
                     <i className="bi bi-search"></i>
@@ -37,8 +38,8 @@ export const SearchScreen = () => {
                     Loading...
                 </div>
                 :
-                <FilmList
-                    films={films}
+                <UsersList
+                    users={users}
                 />
             }
         </div>

@@ -5,6 +5,10 @@ export const getAllUsersThunk = createAsyncThunk('users/getAllUsers', async () =
     return await service.getAllUsers();
 });
 
-export const getUserThunk = createAsyncThunk('users/getUser/', async (id) => {
+export const getUserThunk = createAsyncThunk('users/getUser', async (id) => {
     return await service.getUser(id);
+});
+
+export const deleteUserThunk = createAsyncThunk('users/deleteUser', async (id) => {
+    return await service.deleteUser(id);
 });

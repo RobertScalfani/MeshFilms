@@ -11,9 +11,10 @@ import {configureStore} from "@reduxjs/toolkit";
 import filmsReducer from "./reducers/filmsReducer";
 import authReducer from "./reducers/authReducer";
 import usersReducer from "./reducers/usersReducer";
+import ratingsReducer from "./reducers/ratingsReducer";
 
 const store = configureStore({
-    reducer: {films: filmsReducer, auth: authReducer, users: usersReducer}
+    reducer: {films: filmsReducer, auth: authReducer, users: usersReducer, ratings: ratingsReducer}
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -1,7 +1,7 @@
 import './App.css';
 import {useDispatch, useSelector} from "react-redux";
 import {Route, Routes, useNavigate} from "react-router";
-import {SearchScreen} from "./SearchScreen";
+import {FilmSearchScreen} from "./FilmSearchScreen";
 import {DetailsScreen} from "./DetailsScreen";
 import NavBar from "./NavBar";
 import {HomeScreen} from "./HomeScreen";
@@ -10,6 +10,7 @@ import MyProfileScreen from "./MyProfileScreen";
 import {logoutThunk} from "./services/authThunks";
 import {ManageUsersScreen} from "./ManageUsersScreen";
 import ViewProfileScreen from "./ViewProfileScreen";
+import {PeopleSearchScreen} from "./PeopleSearchScreen";
 
 function App() {
 
@@ -57,7 +58,8 @@ function App() {
                           <Route path='login' element={<LoginScreen/>}/>
                           <Route path='profile' element={<MyProfileScreen/>}/>
                           <Route path='profile/:profileId' element={<ViewProfileScreen/>}/>
-                          <Route path='search' element={<SearchScreen/>}/>
+                          <Route path='peopleSearch' element={<PeopleSearchScreen/>}/>
+                          <Route path='search' element={<FilmSearchScreen/>}/>
                           <Route path='details/:filmId' element={<DetailsScreen/>}/>
                           <Route path='manage' element={<ManageUsersScreen/>}/>
                       </Routes>

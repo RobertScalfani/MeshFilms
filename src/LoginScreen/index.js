@@ -24,6 +24,7 @@ function LoginScreen() {
 
     const handleRegister = async () => {
         await dispatch(registerThunk({ username, password }));
+        navigate('/profile');
     }
 
     if (currentUser && !invalidLogin && !invalidRegistration && !loading) {

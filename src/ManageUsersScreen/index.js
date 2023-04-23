@@ -9,11 +9,11 @@ export const ManageUsersScreen = () => {
     const {users, loading} = useSelector(state => state.users)
     const dispatch = useDispatch();
 
+    const [reload, setReload] = React.useState(false);
+
     useEffect(() => {
         dispatch(getAllUsersThunk());
-    }, []);
-
-    console.log(users);
+    }, [reload]);
 
     /**
      * Render.
@@ -32,6 +32,8 @@ export const ManageUsersScreen = () => {
                     :
                     <UsersList
                         users={users}
+                        isAdmin={true}
+                        deleteCallback={() => setReload(!reload)}
                     />
                 }
             </div>
