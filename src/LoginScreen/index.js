@@ -14,7 +14,6 @@ function LoginScreen() {
     const dispatch = useDispatch();
 
     const invalidLogin = error && error.message === "Request failed with status code 404";
-    const invalidRegistration = error && error.message === "Request failed with status code 409";
 
     const handleLogin = async () => {
         if (!currentUser) {
@@ -22,18 +21,13 @@ function LoginScreen() {
         }
     };
 
-    const handleRegister = async () => {
-        await dispatch(registerThunk({ username, password }));
-        navigate('/profile');
-    }
-
-    if (currentUser && !invalidLogin && !invalidRegistration && !loading) {
+    if (currentUser && !invalidLogin && !loading) {
         navigate('/profile');
     }
 
     return (
         <div>
-            <PageHeader title={'Login or Register'}/>
+            <PageHeader title={'Login'}/>
             <div className='d-flex justify-content-center align-items-center flex-column'>
                 <div>
                     <label>Username</label>
@@ -53,7 +47,7 @@ function LoginScreen() {
                     <button className='btn btn-primary mx-1' onClick={handleLogin}>
                         Login
                     </button>
-                    <button className='btn btn-primary mx-1' onClick={handleRegister}>
+                    <button className='btn btn-primary mx-1' onClick={() => navigate('/register')}>
                         Register
                     </button>
                 </div>
@@ -66,13 +60,6 @@ function LoginScreen() {
                     <div className='text-danger'>
                         That username/password combination does not exist. Try again or register a new account.
                     </div>
-                }
-                {invalidRegistration ?
-                    <div className='text-danger'>
-                        That username is already taken.
-                    </div>
-                    :
-                    <></>
                 }
             </div>
 

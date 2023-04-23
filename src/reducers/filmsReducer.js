@@ -3,8 +3,14 @@ import {searchFilmsThunk, getFilmThunk, getUpcomingFilmsThunk} from "../services
 
 const filmsSlice = createSlice({
     name: 'films',
-    initialState: {films: [], film: {}, loading: true},
-    reducers: {},
+    initialState: {films: [], film: {}, loading: false},
+    reducers: {
+        clearFilms(state, action) {
+            state.films = [];
+            state.film = {};
+            state.loading = false;
+        }
+    },
     extraReducers: {
         [searchFilmsThunk.pending]:
             (state) => {
@@ -53,5 +59,7 @@ const filmsSlice = createSlice({
             },
     }
 });
+
+export const {clearFilms} = filmsSlice.actions;
 
 export default filmsSlice.reducer;

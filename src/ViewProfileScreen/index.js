@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {useParams} from "react-router";
-import {logoutThunk, updateUserThunk} from "../services/authThunks";
 import PageHeader from "../Components/PageHeader";
 import {getUserThunk} from "../services/usersThunks";
 import {getRatingsByReviewerIdThunk} from "../services/ratingsThunks";
@@ -43,12 +42,6 @@ function ViewProfileScreen() {
                         Last Name: {viewUser.lastName}
                     </div>
                     <div>
-                        Birth Date: {viewUser.birthDate}
-                    </div>
-                    <div>
-                        email: {viewUser.email}
-                    </div>
-                    <div>
                         Role: {viewUser.role}
                     </div>
                     <PageHeader title={'User\'s Reviews'}/>
@@ -57,7 +50,10 @@ function ViewProfileScreen() {
                             reviews={ratings}
                         />
                     }
-                    {JSON.stringify(ratings)}
+                    <PageHeader title={'Following:'}/>
+                    <div>
+                        ...
+                    </div>
                 </div>
 
             }

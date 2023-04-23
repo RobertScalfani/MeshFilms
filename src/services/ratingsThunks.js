@@ -14,6 +14,5 @@ export const getRatingsByFilmIdThunk = createAsyncThunk('ratings/getByFilm', asy
 });
 
 export const getAllRatingsThunk = createAsyncThunk('users/getAllRatings', async () => {
-    // TODO - NOT USED YET
     return await service.getAllRatings();
 });

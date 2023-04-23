@@ -1,18 +1,52 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import {logoutThunk, updateUserThunk} from "../services/authThunks";
 import PageHeader from "../Components/PageHeader";
+import RatingsList from "../RatingsList";
+import {getRatingsByReviewerIdThunk} from "../services/ratingsThunks";
+import {getUserThunk} from "../services/usersThunks";
 
 function MyProfileScreen() {
+
+    // Redux state.
     const {currentUser} = useSelector((state) => state.auth)
+    const {ratings, loading} = useSelector(state => state.ratings)
+
     const [updatedProfile, setUpdatedProfile] = useState(currentUser);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (currentUser) {
+            (async () => await dispatch(getRatingsByReviewerIdThunk(currentUser._id)))();
+        }
+    }, []);
+
     const save = async () => {
         await dispatch(updateUserThunk({updatedProfile}));
     };
+
+    /**
+     * If the user is not logged in.
+     */
+    if (!updatedProfile) {
+        return (
+            <div>
+                <PageHeader title={'My Profile'}/>
+                <div className='d-flex justify-content-center'>
+                    <h4>
+                        You are not logged in.
+                    </h4>
+                    <button className='btn btn-primary ms-3' onClick={() => {
+                        navigate("/login");
+                    }}>
+                        Log In
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     /**
      * Render.
@@ -20,7 +54,7 @@ function MyProfileScreen() {
     return (
         <div>
             <PageHeader title={'My Profile'}/>
-            {updatedProfile ? (
+            {updatedProfile &&
                 <div>
                     <form className='d-flex align-items-center pb-2'>
                         <label className='pe-3' style={{width: '100px'}}>Username</label>
@@ -74,31 +108,23 @@ function MyProfileScreen() {
                             <option value="admin">Admin</option>
                         </select>
                     </form>
-
-                    <button className="btn btn-primary mx-2"
-                            onClick={() => {
-                                dispatch(logoutThunk());
-                                navigate("/login");
-                            }}>
-                        Logout</button>
-                    <button className="btn btn-primary mx-2" onClick={save}>Save</button>
-                </div>
-            ) :
-                <div className='d-flex'>
-                    <h4>
-                        You are not logged in.
-                    </h4>
-                    <button className='btn btn-primary ms-3' onClick={() => {
-                        navigate("/login");
-                    }}>
-                        Log In
-                    </button>
+                    <div className='d-flex justify-content-center mb-3'>
+                        <button className="btn btn-primary mx-2" style={{width: '125px'}} onClick={save}>Save Changes</button>
+                        <button className="btn btn-danger mx-2" style={{width: '125px'}}
+                                onClick={() => {
+                                    dispatch(logoutThunk());
+                                    navigate("/login");
+                                }}>Logout
+                        </button>
+                    </div>
                 </div>
             }
             <PageHeader title={'My Ratings'}/>
-            <div>
-                ...
-            </div>
+            {ratings &&
+                <RatingsList
+                    reviews={ratings}
+                />
+            }
         </div>
     );
 

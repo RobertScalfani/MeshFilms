@@ -1,11 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {addRatingThunk, getRatingsByFilmIdThunk, getRatingsByReviewerIdThunk} from "../services/ratingsThunks";
+import {
+    addRatingThunk,
+    getAllRatingsThunk,
+    getRatingsByFilmIdThunk,
+    getRatingsByReviewerIdThunk
+} from "../services/ratingsThunks";
 
 const ratingsSlice = createSlice({
     name: 'ratings',
     initialState: {ratings: [], loading: true},
-    reducers: {},
     extraReducers: {
+        [addRatingThunk.fulfilled]: (state, {payload}) => {},
         [getRatingsByReviewerIdThunk.pending]:
             (state) => {
                 state.loading = true
@@ -36,10 +41,20 @@ const ratingsSlice = createSlice({
                 state.loading = false
                 state.ratings = []
             },
-        [addRatingThunk.fulfilled]:
+        [getAllRatingsThunk.pending]:
+            (state) => {
+                state.loading = true
+                state.ratings = []
+            },
+        [getAllRatingsThunk.fulfilled]:
             (state, {payload}) => {
-                // state.loading = false
-                // state.ratings = payload
+                state.loading = false
+                state.ratings = payload
+            },
+        [getAllRatingsThunk.rejected]:
+            (state, action) => {
+                state.loading = false
+                state.ratings = []
             },
     }
 });

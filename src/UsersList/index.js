@@ -10,6 +10,7 @@ const UserList = (props) => {
             {users.map(user => {
                 return (
                     <UserItem
+                        key={user._id}
                         user={user}
                         isAdmin={props.isAdmin}
                         deleteCallback={props.deleteCallback}

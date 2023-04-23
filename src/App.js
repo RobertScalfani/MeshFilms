@@ -11,6 +11,7 @@ import {logoutThunk} from "./services/authThunks";
 import {ManageUsersScreen} from "./ManageUsersScreen";
 import ViewProfileScreen from "./ViewProfileScreen";
 import {PeopleSearchScreen} from "./PeopleSearchScreen";
+import RegisterScreen from "./RegisterScreen";
 
 function App() {
 
@@ -23,13 +24,13 @@ function App() {
           <div className='container'>
               <div className=' d-flex justify-content-between py-3 px-5 border rounded-bottom border-2 mb-3 bg-primary bg-opacity-10'>
                   <h5 className='m-0 p-0'>
-                      MeshFilms.com - Rate, share, and find films with friends!
+                      MeshFilms.com - Rate films and see your friend's ratings!
                   </h5>
                   <h5 className='m-0 p-0'>
                     {currentUser ?
                         <div>
                             Logged in as {currentUser.username}.
-                            <button className='btn btn-primary ms-3' onClick={() => {
+                            <button className='btn btn-danger ms-3' onClick={() => {
                                 dispatch(logoutThunk());
                                 navigate("/login");
                             }}>
@@ -56,10 +57,11 @@ function App() {
                       <Routes>
                           <Route index path="home" element={<HomeScreen/>}/>
                           <Route path='login' element={<LoginScreen/>}/>
+                          <Route path='register' element={<RegisterScreen/>}/>
                           <Route path='profile' element={<MyProfileScreen/>}/>
                           <Route path='profile/:profileId' element={<ViewProfileScreen/>}/>
                           <Route path='peopleSearch' element={<PeopleSearchScreen/>}/>
-                          <Route path='search' element={<FilmSearchScreen/>}/>
+                          <Route path='search/*' element={<FilmSearchScreen/>}/>
                           <Route path='details/:filmId' element={<DetailsScreen/>}/>
                           <Route path='manage' element={<ManageUsersScreen/>}/>
                       </Routes>

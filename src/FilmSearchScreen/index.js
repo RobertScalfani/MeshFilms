@@ -1,22 +1,21 @@
 import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {searchFilmsThunk} from "../services/filmsThunk";
-import FilmList from "../FilmList";
+import {useDispatch} from "react-redux";
 import PageHeader from "../Components/PageHeader";
+import {clearFilms} from "../reducers/filmsReducer";
+import {Route, Routes, useNavigate, useParams} from "react-router";
+import {FilmSearchResults} from "./FilmSearchResults";
 
 export const FilmSearchScreen = () => {
 
-    const [searchQuery, setSearchQuery] = React.useState('');
-    const [search, setSearch] = React.useState(false);
+    const params = useParams();
+    const navigate = useNavigate();
 
-    const {films, loading} = useSelector(state => state.films)
-    const dispatch = useDispatch();
-    useEffect(() => {
-        if (search) {
-            dispatch(searchFilmsThunk(searchQuery));
-        }
-        setSearch(false);
-    }, [search]);
+    // Local state.
+    const [searchQuery, setSearchQuery] = React.useState(params.searchQuery);
+
+    const submitSearch = () => {
+        navigate(`/search/${searchQuery}`);
+    }
 
     /**
      * Render.
@@ -28,19 +27,13 @@ export const FilmSearchScreen = () => {
                 <div className="form-group w-100 me-3">
                     <input type="text" className="form-control" id="film-search" placeholder='Film Search' onChange={(event) => setSearchQuery(event.target.value)}/>
                 </div>
-                <button className='btn btn-primary' onClick={() => setSearch(true)}>
+                <button className='btn btn-primary' onClick={submitSearch}>
                     <i className="bi bi-search"></i>
                 </button>
             </form>
-            {loading ?
-                <div>
-                    Loading...
-                </div>
-                :
-                <FilmList
-                    films={films}
-                />
-            }
+            <Routes>
+                <Route path="/:searchQuery" element={<FilmSearchResults/>}/>
+            </Routes>
         </div>
     )
 }

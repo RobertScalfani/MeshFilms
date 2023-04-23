@@ -21,7 +21,7 @@ export const getRatingsByFilmId = async (id) => {
     return response.data;
 };
 
-export const getAllRatings = async (id) => {
+export const getAllRatings = async () => {
     const response = await api.get(`${RATINGS_URL}/getAllRatings`);
     return response.data;
 };
