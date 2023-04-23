@@ -5,7 +5,6 @@ import {logoutThunk, updateUserThunk} from "../services/authThunks";
 import PageHeader from "../Components/PageHeader";
 import RatingsList from "../RatingsList";
 import {getRatingsByReviewerIdThunk} from "../services/ratingsThunks";
-import {getUserThunk} from "../services/usersThunks";
 
 function MyProfileScreen() {
 
@@ -14,14 +13,23 @@ function MyProfileScreen() {
     const {ratings, loading} = useSelector(state => state.ratings)
 
     const [updatedProfile, setUpdatedProfile] = useState(currentUser);
+    const [attemptLogout, setAttemptLogout] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (currentUser) {
+        if (attemptLogout) {
+            const logout = async () => {
+                await dispatch(logoutThunk());
+                navigate("/login");
+                setAttemptLogout(false);
+            }
+            logout();
+        }
+        else if (currentUser) {
             (async () => await dispatch(getRatingsByReviewerIdThunk(currentUser._id)))();
         }
-    }, []);
+    }, [attemptLogout]);
 
     const save = async () => {
         await dispatch(updateUserThunk({updatedProfile}));
@@ -94,16 +102,16 @@ function MyProfileScreen() {
                     </form>
                     <form className='d-flex align-items-center pb-2'>
                         <label className='pe-3' style={{width: '100px'}}>Birthdate</label>
-                        <input type="date" className="form-control w-50" value={updatedProfile.birthDate}
+                        <input type="date" className="form-control w-50" value={new Date(updatedProfile.birthDate).toISOString().substring(0,10)}
                                onChange={(event) => {setUpdatedProfile({
                                    ...updatedProfile,
-                                   birthDate: event.target.value});
-                               }}
+                                   birthDate: new Date(event.target.value).toDateString()
+                               })}}
                         />
                     </form>
                     <form className='d-flex align-items-center pb-2'>
                         <label className='pe-3' style={{width: '100px'}}>Role</label>
-                        <select className="form-select w-50">
+                        <select className="form-select w-50" defaultValue={updatedProfile.role} onChange={(event) => {setUpdatedProfile({...updatedProfile, role: event.target.value})}}>
                             <option value="user">User</option>
                             <option value="admin">Admin</option>
                         </select>
@@ -111,10 +119,7 @@ function MyProfileScreen() {
                     <div className='d-flex justify-content-center mb-3'>
                         <button className="btn btn-primary mx-2" style={{width: '125px'}} onClick={save}>Save Changes</button>
                         <button className="btn btn-danger mx-2" style={{width: '125px'}}
-                                onClick={() => {
-                                    dispatch(logoutThunk());
-                                    navigate("/login");
-                                }}>Logout
+                                onClick={() => setAttemptLogout(true)}>Logout
                         </button>
                     </div>
                 </div>

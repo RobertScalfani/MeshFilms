@@ -1,4 +1,5 @@
 import './App.css';
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Route, Routes, useNavigate} from "react-router";
 import {FilmSearchScreen} from "./FilmSearchScreen";
@@ -17,6 +18,19 @@ function App() {
 
     const { currentUser, loading } = useSelector((state) => state.auth);
 
+    const [timeToLogout, setTimeToLogout] = React.useState(false);
+
+    React.useEffect(() => {
+        if (timeToLogout) {
+            const logout = async () => {
+                await dispatch(logoutThunk());
+                navigate("/login");
+                setTimeToLogout(false);
+            }
+            logout();
+        }
+    }, [timeToLogout]);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -29,10 +43,10 @@ function App() {
                   <h5 className='m-0 p-0'>
                     {currentUser ?
                         <div>
-                            Logged in as {currentUser.username}.
+                            Logged in as @{currentUser.username}.
                             <button className='btn btn-danger ms-3' onClick={() => {
                                 dispatch(logoutThunk());
-                                navigate("/login");
+                                setTimeToLogout(true);
                             }}>
                                 Log out
                             </button>

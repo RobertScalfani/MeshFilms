@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {loginThunk, registerThunk} from "../services/authThunks";
+import {loginThunk} from "../services/authThunks";
 import PageHeader from "../Components/PageHeader";
 
 function LoginScreen() {
@@ -10,19 +10,26 @@ function LoginScreen() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [attemptLogin, setAttemptLogin] = useState(false);
+    const [timeToNavigate, setTimeToNavigate] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const invalidLogin = error && error.message === "Request failed with status code 404";
 
-    const handleLogin = async () => {
-        if (!currentUser) {
-            await dispatch(loginThunk({ username, password }));
+    React.useEffect(() => {
+        if (attemptLogin) {
+            dispatch(loginThunk({ username, password }));
+            setAttemptLogin(false);
         }
-    };
+        if (timeToNavigate) {
+            navigate('/profile');
+            setTimeToNavigate(false);
+        }
+    }, [attemptLogin, timeToNavigate]);
 
-    if (currentUser && !invalidLogin && !loading) {
-        navigate('/profile');
+    if (currentUser && !invalidLogin && !loading && !timeToNavigate) {
+        setTimeToNavigate(true);
     }
 
     return (
@@ -44,7 +51,7 @@ function LoginScreen() {
                     />
                 </div>
                 <div className='p-2'>
-                    <button className='btn btn-primary mx-1' onClick={handleLogin}>
+                    <button className='btn btn-primary mx-1' onClick={() => setAttemptLogin(true)}>
                         Login
                     </button>
                     <button className='btn btn-primary mx-1' onClick={() => navigate('/register')}>
