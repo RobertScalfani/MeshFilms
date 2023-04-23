@@ -25,3 +25,8 @@ export const getAllRatings = async () => {
     const response = await api.get(`${RATINGS_URL}/getAllRatings`);
     return response.data;
 };
+
+export const deleteRating = async (ratingId) => {
+    const response = await api.delete(`${RATINGS_URL}/${ratingId}`);
+    return response.data;
+}

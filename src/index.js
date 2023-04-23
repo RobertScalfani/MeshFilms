@@ -12,9 +12,10 @@ import filmsReducer from "./reducers/filmsReducer";
 import authReducer from "./reducers/authReducer";
 import usersReducer from "./reducers/usersReducer";
 import ratingsReducer from "./reducers/ratingsReducer";
+import followersReducer from "./reducers/followersReducer";
 
 const store = configureStore({
-    reducer: {films: filmsReducer, auth: authReducer, users: usersReducer, ratings: ratingsReducer}
+    reducer: {films: filmsReducer, auth: authReducer, users: usersReducer, ratings: ratingsReducer, followers: followersReducer}
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

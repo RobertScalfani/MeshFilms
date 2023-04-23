@@ -28,18 +28,20 @@ export const HomeScreen = () => {
     return (
         <div>
             <PageHeader title={'Home'}/>
-            <div className='mb-3'>
+            <div className='mb-3 p-2 border rounded ps-3'>
                 On the home page, you can see recent reviews and check out upcoming films!
             </div>
-            {currentUser ?
-                <PageHeader title={'Your Recent Reviews'}/>
-                :
-                <PageHeader title={'All Recent Reviews'}/>
-            }
-            <RatingsList
-                reviews={ratings}
-            />
-            <div>
+            <div className='mb-3'>
+                {currentUser ?
+                    <PageHeader title={'Your Recent Reviews'}/>
+                    :
+                    <PageHeader title={'All Recent Reviews'}/>
+                }
+                <RatingsList
+                    reviews={ratings}
+                />
+            </div>
+            <div className='mb-3'>
                 <PageHeader title={'Upcoming Films'}/>
                 {loading ?
                     <div>
@@ -51,9 +53,17 @@ export const HomeScreen = () => {
                     />
                 }
             </div>
-            <PageHeader title={'Following'}/>
-            <div>
-                ...
+            <div className='mb-3'>
+                <PageHeader title={'People you\'re following\'s recent reviews'}/>
+                {currentUser ?
+                    <div>
+                        TODO
+                    </div>
+                    :
+                    <div>
+                        You must log in to see recent reviews from people you're following.
+                    </div>
+                }
             </div>
         </div>
     )

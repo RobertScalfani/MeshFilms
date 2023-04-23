@@ -13,6 +13,10 @@ export const getRatingsByFilmIdThunk = createAsyncThunk('ratings/getByFilm', asy
     return await service.getRatingsByFilmId(filmId);
 });
 
+export const deleteRatingThunk = createAsyncThunk('ratings/delete', async (ratingId) => {
+    return await service.deleteRating(ratingId);
+});
+
 export const getAllRatingsThunk = createAsyncThunk('users/getAllRatings', async () => {
     return await service.getAllRatings();
 });

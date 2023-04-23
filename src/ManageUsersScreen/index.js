@@ -6,6 +6,7 @@ import {getAllUsersThunk} from "../services/usersThunks";
 
 export const ManageUsersScreen = () => {
 
+    const {currentUser} = useSelector(state => state.auth)
     const {users, loading} = useSelector(state => state.users)
     const dispatch = useDispatch();
 
@@ -32,7 +33,7 @@ export const ManageUsersScreen = () => {
                     :
                     <UsersList
                         users={users}
-                        isAdmin={true}
+                        isAdmin={currentUser.role === 'admin'}
                         deleteCallback={() => setReload(!reload)}
                     />
                 }

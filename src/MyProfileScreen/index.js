@@ -5,6 +5,9 @@ import {logoutThunk, profileThunk, updateUserThunk} from "../services/authThunks
 import PageHeader from "../Components/PageHeader";
 import RatingsList from "../RatingsList";
 import {getRatingsByReviewerIdThunk} from "../services/ratingsThunks";
+import {getFollowersThunk, getFollowingThunk} from "../services/followersThunks";
+import UsersList from "../UsersList";
+import FollowStatus from "../Components/FollowStatus";
 
 function MyProfileScreen() {
 
@@ -14,6 +17,7 @@ function MyProfileScreen() {
 
     const [updatedProfile, setUpdatedProfile] = useState(currentUser);
     const [attemptLogout, setAttemptLogout] = useState(false);
+    const [reloadRatingsState, setReloadRatingsState] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -29,12 +33,16 @@ function MyProfileScreen() {
         else if (currentUser) {
             (async () => await dispatch(getRatingsByReviewerIdThunk(currentUser._id)))();
         }
-        dispatch(profileThunk());
-    }, [attemptLogout]);
+        (async () => await dispatch(profileThunk()))()
+    }, [attemptLogout, reloadRatingsState]);
 
     const save = async () => {
         await dispatch(updateUserThunk({updatedProfile}));
     };
+
+    const reloadRatings = () => {
+        setReloadRatingsState(!reloadRatingsState);
+    }
 
     /**
      * If the user is not logged in.
@@ -127,8 +135,17 @@ function MyProfileScreen() {
             }
             <PageHeader title={'My Ratings'}/>
             {ratings &&
-                <RatingsList
-                    reviews={ratings}
+                <div className='mb-3'>
+                    <RatingsList
+                        reviews={ratings}
+                        canDelete={true}
+                        reloadRatings={reloadRatings}
+                    />
+                </div>
+            }
+            {currentUser &&
+                <FollowStatus
+                    userId={currentUser._id}
                 />
             }
         </div>

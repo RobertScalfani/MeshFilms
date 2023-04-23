@@ -71,6 +71,7 @@ function App() {
                   <div className='col-10'>
                       <Routes>
                           <Route index path="home" element={<HomeScreen/>}/>
+                          <Route index element={<HomeScreen/>}/>
                           <Route path='login' element={<LoginScreen/>}/>
                           <Route path='register' element={<RegisterScreen/>}/>
                           <Route path='profile' element={<MyProfileScreen/>}/>
