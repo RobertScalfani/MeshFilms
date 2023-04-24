@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {searchFilmsThunk} from "../services/filmsThunk";
 import FilmList from "../FilmList";
-import PageHeader from "../Components/PageHeader";
+import SectionHeader from "../Components/SectionHeader";
 import {clearFilms} from "../reducers/filmsReducer";
 import {useParams} from "react-router";
 
@@ -30,7 +30,7 @@ export const FilmSearchResults = () => {
      */
     return (
         <div>
-            <PageHeader title={'Film Results for "' + searchQuery + '"'}/>
+            <SectionHeader title={'Film Results for "' + searchQuery + '"'}/>
             {loading ?
                 <div>
                     Loading...

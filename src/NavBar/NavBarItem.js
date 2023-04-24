@@ -9,11 +9,13 @@ const NavBarItem = (
     }
 ) => {
 
+    const active = window.location.pathname.includes(link) || (window.location.pathname === ("/") && title === 'Home');
+
     return (
-        <Link to={link} className={`list-group-item`}>
+        <Link to={link} className={`list-group-item ${active ? 'active' : ''}`}>
             <div className="d-flex">
                 <i className={`${icon} align-self-center`}></i>
-                <span>&nbsp;{title}</span>
+                <span className='d-none d-sm-none d-md-none d-lg-block'>&nbsp;{title}</span>
             </div>
         </Link>
     );

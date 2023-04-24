@@ -12,7 +12,12 @@ const UserItem = (props) => {
     return (
          <div className='list-group-item'>
               <div className='d-flex justify-content-between align-items-center'>
-                <Link to={'/profile/' + user._id} className='ms-4 w-75 list-group-item p-0 m-0 border-0'>
+                <Link to={'/profile/' + user._id} className='ms-4 w-75 list-group-item p-0 m-0 border-0' onClick={() => {
+                    if (props.callback) {
+                        props.callback();
+                    }
+                }
+                }>
                     <h4 className='fw-bold'>
                         @{user.username}
                     </h4>

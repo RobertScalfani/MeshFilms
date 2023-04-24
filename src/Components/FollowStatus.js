@@ -1,19 +1,13 @@
 import React, {useEffect} from "react";
-import PageHeader from "./PageHeader";
+import SectionHeader from "./SectionHeader";
 import UsersList from "../UsersList";
 import {useDispatch, useSelector} from "react-redux";
-import {logoutThunk, profileThunk} from "../services/authThunks";
-import {getRatingsByReviewerIdThunk} from "../services/ratingsThunks";
 import {getFollowersThunk, getFollowingThunk} from "../services/followersThunks";
 
 const FollowStatus = (props) => {
 
     const userId = props.userId;
-
     const {followingList, followerList} = useSelector(state => state.followers)
-
-    console.log(followerList);
-
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -23,16 +17,18 @@ const FollowStatus = (props) => {
 
     return (
         <div>
-            <PageHeader title={'Following'}/>
+            <SectionHeader title={'Following'}/>
             <div className='mb-3'>
                 <UsersList
                     users={followingList}
+                    callback={props.callback}
                 />
             </div>
-            <PageHeader title={'Followers'}/>
+            <SectionHeader title={'Followers'}/>
             <div className='mb-3'>
                 <UsersList
                     users={followerList}
+                    callback={props.callback}
                 />
             </div>
         </div>

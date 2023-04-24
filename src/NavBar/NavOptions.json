@@ -3,30 +3,32 @@
     "_id": 1,
     "icon": "bi bi-house",
     "title": "Home",
-    "link": "home"
+    "link": "home",
+    "adminOnly": false,
+    "premiumOnly": false
   },
   {
     "_id": 2,
     "icon": "bi bi-film",
     "title": "Film Search",
-    "link": "search"
+    "link": "search",
+    "adminOnly": false,
+    "premiumOnly": false
   },
   {
     "_id": 4,
-    "icon": "bi bi-people",
-    "title": "People Search",
-    "link": "peopleSearch"
-  },
-  {
-    "_id": 3,
     "icon": "bi bi-person",
     "title": "My Profile",
-    "link": "profile"
+    "link": "profile",
+    "adminOnly": false,
+    "premiumOnly": false
   },
   {
     "_id": 5,
     "icon": "bi bi-gear",
-    "title": "Manage Users",
-    "link": "manage"
+    "title": "Manager",
+    "link": "manage",
+    "adminOnly": true,
+    "premiumOnly": false
   }
 ]

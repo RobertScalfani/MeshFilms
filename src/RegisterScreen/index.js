@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {registerThunk} from "../services/authThunks";
-import PageHeader from "../Components/PageHeader";
+import SectionHeader from "../Components/SectionHeader";
 
 function LoginScreen() {
 
@@ -44,7 +44,7 @@ function LoginScreen() {
 
     return (
         <div>
-            <PageHeader title={'Register'}/>
+            <SectionHeader title={'Register'}/>
             <div className='d-flex justify-content-center align-items-center flex-column'>
                 <div>
                     <form className='d-flex align-items-center pb-2'>
@@ -87,6 +87,7 @@ function LoginScreen() {
                         <label className='pe-3' style={{width: '100px'}}>Role</label>
                         <select className="form-select" style={{width: '250px'}} onChange={(event) => setRole(event.target.value)}>
                             <option value="user">User</option>
+                            <option value="premium">Premium</option>
                             <option value="admin">Admin</option>
                         </select>
                     </form>

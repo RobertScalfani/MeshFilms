@@ -24,6 +24,7 @@ const UserList = (props) => {
                         user={user}
                         isAdmin={props.isAdmin}
                         deleteCallback={props.deleteCallback}
+                        callback={props.callback}
                     />
                 );
             })}

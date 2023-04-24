@@ -12,7 +12,7 @@ const FilmListItem = (props) => {
                   <img src={film.primaryImage.url} className='rounded border border-2 m-1' style={{height: '150px'}}/>
                   :
                   <div className='d-flex rounded border border-2 m-1 bg-dark bg-opacity-10 align-items-center align-content-center' style={{height: '150px', width: '150px'}}>
-                      <h5>
+                      <h5 className='ps-3'>
                           No image available
                       </h5>
                   </div>

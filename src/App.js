@@ -11,7 +11,6 @@ import MyProfileScreen from "./MyProfileScreen";
 import {logoutThunk, profileThunk} from "./services/authThunks";
 import {ManageUsersScreen} from "./ManageUsersScreen";
 import ViewProfileScreen from "./ViewProfileScreen";
-import {PeopleSearchScreen} from "./PeopleSearchScreen";
 import RegisterScreen from "./RegisterScreen";
 
 function App() {
@@ -66,7 +65,9 @@ function App() {
               </div>
               <div className='row'>
                   <div className='col-2'>
-                      <NavBar />
+                      <NavBar
+                        role={currentUser ? currentUser.role : "guest"}
+                      />
                   </div>
                   <div className='col-10'>
                       <Routes>
@@ -76,7 +77,6 @@ function App() {
                           <Route path='register' element={<RegisterScreen/>}/>
                           <Route path='profile' element={<MyProfileScreen/>}/>
                           <Route path='profile/:profileId' element={<ViewProfileScreen/>}/>
-                          <Route path='peopleSearch' element={<PeopleSearchScreen/>}/>
                           <Route path='search/*' element={<FilmSearchScreen/>}/>
                           <Route path='details/:filmId' element={<DetailsScreen/>}/>
                           <Route path='manage' element={<ManageUsersScreen/>}/>

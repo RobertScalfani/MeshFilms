@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {loginThunk} from "../services/authThunks";
-import PageHeader from "../Components/PageHeader";
+import SectionHeader from "../Components/SectionHeader";
 
 function LoginScreen() {
 
@@ -34,7 +34,7 @@ function LoginScreen() {
 
     return (
         <div>
-            <PageHeader title={'Login'}/>
+            <SectionHeader title={'Login'}/>
             <div className='d-flex justify-content-center align-items-center flex-column'>
                 <div>
                     <label>Username</label>

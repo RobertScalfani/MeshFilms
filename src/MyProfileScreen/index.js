@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import {logoutThunk, profileThunk, updateUserThunk} from "../services/authThunks";
-import PageHeader from "../Components/PageHeader";
+import SectionHeader from "../Components/SectionHeader";
 import RatingsList from "../RatingsList";
 import {getRatingsByReviewerIdThunk} from "../services/ratingsThunks";
 import {getFollowersThunk, getFollowingThunk} from "../services/followersThunks";
@@ -17,7 +17,7 @@ function MyProfileScreen() {
 
     const [updatedProfile, setUpdatedProfile] = useState(currentUser);
     const [attemptLogout, setAttemptLogout] = useState(false);
-    const [reloadRatingsState, setReloadRatingsState] = useState(false);
+    const [reloadState, setReloadState] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -33,25 +33,26 @@ function MyProfileScreen() {
         else if (currentUser) {
             (async () => await dispatch(getRatingsByReviewerIdThunk(currentUser._id)))();
         }
-        (async () => await dispatch(profileThunk()))()
-    }, [attemptLogout, reloadRatingsState]);
+    }, [attemptLogout, reloadState]);
 
     const save = async () => {
         await dispatch(updateUserThunk({updatedProfile}));
+        reloadRatings();
+        setUpdatedProfile(currentUser);
     };
 
     const reloadRatings = () => {
-        setReloadRatingsState(!reloadRatingsState);
+        setReloadState(!reloadState);
     }
 
     /**
      * If the user is not logged in.
      */
-    if (!updatedProfile) {
+    if (!updatedProfile || !currentUser) {
         return (
             <div>
-                <PageHeader title={'My Profile'}/>
-                <div className='d-flex justify-content-center'>
+                <SectionHeader title={'My Profile'}/>
+                <div className='d-flex justify-content-center border rounded p-3'>
                     <h4>
                         You are not logged in.
                     </h4>
@@ -70,9 +71,9 @@ function MyProfileScreen() {
      */
     return (
         <div>
-            <PageHeader title={'My Profile'}/>
-            {updatedProfile &&
-                <div>
+            <SectionHeader title={'My Profile'}/>
+            {currentUser &&
+                <div className='p-3 border rounded mb-3'>
                     <form className='d-flex align-items-center pb-2'>
                         <label className='pe-3' style={{width: '100px'}}>Username</label>
                         <input type="text" className="form-control w-50" value={updatedProfile.username}
@@ -122,10 +123,11 @@ function MyProfileScreen() {
                         <label className='pe-3' style={{width: '100px'}}>Role</label>
                         <select className="form-select w-50" defaultValue={updatedProfile.role} onChange={(event) => {setUpdatedProfile({...updatedProfile, role: event.target.value})}}>
                             <option value="user">User</option>
+                            <option value="premium">Premium</option>
                             <option value="admin">Admin</option>
                         </select>
                     </form>
-                    <div className='d-flex justify-content-center mb-3'>
+                    <div className='d-flex justify-content-center'>
                         <button className="btn btn-primary mx-2" style={{width: '125px'}} onClick={save}>Save Changes</button>
                         <button className="btn btn-danger mx-2" style={{width: '125px'}}
                                 onClick={() => setAttemptLogout(true)}>Logout
@@ -133,7 +135,7 @@ function MyProfileScreen() {
                     </div>
                 </div>
             }
-            <PageHeader title={'My Ratings'}/>
+            <SectionHeader title={'My Ratings'}/>
             {ratings &&
                 <div className='mb-3'>
                     <RatingsList

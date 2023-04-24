@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import PageHeader from "../Components/PageHeader";
+import SectionHeader from "../Components/SectionHeader";
 import UsersList from "../UsersList";
 import {getAllUsersThunk} from "../services/usersThunks";
 
@@ -21,7 +21,7 @@ export const ManageUsersScreen = () => {
      */
     return (
         <div>
-            <PageHeader title={'Manage Users'}/>
+            <SectionHeader title={'Manage Users'}/>
             <div>
                 <h4>
                     All users:
